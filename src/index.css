@@ -5,6 +5,12 @@
     url("./assets/fonts/starjedi/Starjhol.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Stjldbl1";
+  src: local("Stjldbl1"),
+    url("./assets/fonts/stjelogo/Stjldbl1.ttf") format("truetype");
+}
+
 * {
   margin: 0 auto;
   padding: 0;

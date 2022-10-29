@@ -44,7 +44,7 @@ const CardsContainer = styled.div`
   justify-content: flex-start;
   flex: 2 75%;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem 1rem;
   width: 100%;
   > * {
     flex-basis: 1;

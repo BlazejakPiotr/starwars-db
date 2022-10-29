@@ -10,12 +10,6 @@ export const Card = () => {
 
   const CardDetailsSide = () => (
     <DetailsContainer>
-      <div className="top-card">
-        Male
-        <MdOutlineFavoriteBorder size={26} color="#f0f0f0" />
-      </div>
-      <h2>Owen Lars</h2>
-
       <div
         style={{
           display: "flex",
@@ -52,20 +46,52 @@ export const Card = () => {
 
   return (
     <Container onClick={() => handleShowDetails(showDetails)}>
-      {showDetails ? <CardDetailsSide /> : <Symbol fill="#a3a194" />}
+      <AddToFavorites>
+        <MdOutlineFavoriteBorder
+          size={32}
+          color="#f0f0f0"
+          style={{ margin: 0 }}
+        />
+      </AddToFavorites>
+      {showDetails ? (
+        <CardDetailsSide />
+      ) : (
+        <>
+          <h2>owen lars</h2>
+          <Symbol fill="#7c7c7c75" className="card-symbol" />
+        </>
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
-  margin: 0;
-  width: 240px;
-  height: 320px;
+  position: relative;
   padding: 0.75rem;
-  background-color: #353535;
+  width: 230px;
+  height: 260px;
+  background-color: #444c4c;
   border: 6px solid #dfdfdf;
   border-radius: 12px;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  h2 {
+    text-align: center;
+    font-family: "Stjldbl1";
+    letter-spacing: 1.5pt;
+    z-index: 1;
+  }
+
+  svg.card-symbol {
+    padding: 0.75rem;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
 `;
 
 const DetailsContainer = styled.div`
@@ -73,24 +99,12 @@ const DetailsContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 0;
+  justify-content: space-evenly;
+
   div,
   span {
     margin: 0;
   }
-  .top-card {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    svg {
-      margin: 0;
-    }
-  }
-
   h2 {
     text-align: center;
     font-weight: 700;
@@ -106,4 +120,10 @@ const DetailsContainer = styled.div`
     font-weight: 200;
     font-size: 14px;
   }
+`;
+
+const AddToFavorites = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 `;
