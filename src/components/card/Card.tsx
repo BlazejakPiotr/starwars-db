@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Symbol } from "../../assets/images/symbol.svg";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { motion as m } from "framer-motion";
 
 export const Card = () => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
@@ -9,7 +10,12 @@ export const Card = () => {
   const handleShowDetails = (prev: boolean) => setShowDetails(!prev);
 
   const CardDetailsSide = () => (
-    <DetailsContainer>
+    <DetailsContainer
+      initial={{ rotateY: -180, opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
+      exit={{ opacity: 0 }}
+    >
       <div
         style={{
           display: "flex",
@@ -45,27 +51,38 @@ export const Card = () => {
   );
 
   return (
-    <Container onClick={() => handleShowDetails(showDetails)}>
-      <AddToFavorites>
-        <MdOutlineFavoriteBorder
-          size={32}
-          color="#f0f0f0"
-          style={{ margin: 0 }}
-        />
-      </AddToFavorites>
+    <Container
+      onClick={() => handleShowDetails(showDetails)}
+      initial={{ rotateY: 0, opacity: 0 }}
+      animate={{ rotateY: showDetails ? 180 : 0, opacity: 1 }}
+      transition={{ duration: 1, type: "tween" }}
+      exit={{ opacity: 0 }}
+    >
       {showDetails ? (
         <CardDetailsSide />
       ) : (
-        <>
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ rotateY: showDetails ? -180 : 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
+          exit={{ opacity: 0 }}
+        >
+          <AddToFavorites>
+            <MdOutlineFavoriteBorder
+              size={32}
+              color="#f0f0f0"
+              style={{ margin: 0 }}
+            />
+          </AddToFavorites>
           <h2>owen lars</h2>
           <Symbol fill="#7c7c7c75" className="card-symbol" />
-        </>
+        </m.div>
       )}
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled(m.div)`
   position: relative;
   padding: 0.75rem;
   width: 230px;
@@ -94,7 +111,7 @@ const Container = styled.div`
   }
 `;
 
-const DetailsContainer = styled.div`
+const DetailsContainer = styled(m.div)`
   width: 100%;
   height: 100%;
   display: flex;
