@@ -12,6 +12,7 @@
 }
 
 body {
+  margin: 0;
   background-color: #000;
   background-image: url("./assets/images/5.png");
   background-size: contain;
