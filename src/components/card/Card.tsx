@@ -14,8 +14,17 @@ export const Card = () => {
       initial={{ rotateY: -180, opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
-      exit={{ opacity: 0 }}
     >
+      <AddToFavorites>
+        <MdOutlineFavoriteBorder
+          size={32}
+          color="#f0f0f0"
+          style={{ margin: 0 }}
+        />
+      </AddToFavorites>
+
+      <h3>Owen Lars</h3>
+      <p style={{ textAlign: "center" }}>male</p>
       <div
         style={{
           display: "flex",
@@ -40,13 +49,6 @@ export const Card = () => {
           <p>2000</p>
         </span>
       </div>
-      <div>
-        <span>Movies:</span>
-        <ul>
-          <li>- A New Hope</li>
-          <li>- Revenge of the Sith</li>
-        </ul>
-      </div>
     </DetailsContainer>
   );
 
@@ -55,8 +57,8 @@ export const Card = () => {
       onClick={() => handleShowDetails(showDetails)}
       initial={{ rotateY: 0, opacity: 0 }}
       animate={{ rotateY: showDetails ? 180 : 0, opacity: 1 }}
+      exit={{ rotateY: 0, opacity: 0 }}
       transition={{ duration: 1, type: "tween" }}
-      exit={{ opacity: 0 }}
     >
       {showDetails ? (
         <CardDetailsSide />
@@ -66,16 +68,17 @@ export const Card = () => {
           animate={{ rotateY: showDetails ? -180 : 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
           exit={{ opacity: 0 }}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            zIndex: 0,
+            display: "flex",
+            alignItems: "center",
+          }}
         >
-          <AddToFavorites>
-            <MdOutlineFavoriteBorder
-              size={32}
-              color="#f0f0f0"
-              style={{ margin: 0 }}
-            />
-          </AddToFavorites>
           <h2>owen lars</h2>
-          <Symbol fill="#7c7c7c75" className="card-symbol" />
+          <Symbol fill="#666355" className="card-symbol" />
         </m.div>
       )}
     </Container>
@@ -87,7 +90,7 @@ const Container = styled(m.div)`
   padding: 0.75rem;
   width: 230px;
   height: 260px;
-  background-color: #444c4c;
+  background-color: #343636;
   border: 6px solid #dfdfdf;
   border-radius: 12px;
   display: flex;
@@ -96,18 +99,18 @@ const Container = styled(m.div)`
   h2 {
     text-align: center;
     font-family: "Stjldbl1";
-    letter-spacing: 1.5pt;
-    z-index: 1;
+    letter-spacing: 1.75pt;
+    z-index: 3;
   }
 
   svg.card-symbol {
-    padding: 0.75rem;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
+    z-index: -1;
   }
 `;
 
@@ -139,8 +142,10 @@ const DetailsContainer = styled(m.div)`
   }
 `;
 
-const AddToFavorites = styled.div`
+const AddToFavorites = styled(m.div)`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
+  margin: 0;
 `;

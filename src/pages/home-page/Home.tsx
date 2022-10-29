@@ -33,7 +33,7 @@ const LogoContainer = styled.div`
   width: 100%;
   h1 {
     font-family: "Starjhol";
-    font-size: 3em;
+    font-size: 2.8em;
     color: #ffe919;
   }
 `;
