@@ -3,8 +3,13 @@ import styled from "styled-components";
 import { ReactComponent as Symbol } from "../../assets/images/symbol.svg";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { motion as m } from "framer-motion";
+import { Character } from "../../interfaces/Character";
 
-export const Card = () => {
+interface CardProps {
+  char: Character;
+}
+
+export const Card = ({ char }: CardProps) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
 
   const handleShowDetails = (prev: boolean) => setShowDetails(!prev);
@@ -23,8 +28,8 @@ export const Card = () => {
         />
       </AddToFavorites>
 
-      <h3>Owen Lars</h3>
-      <p style={{ textAlign: "center" }}>male</p>
+      <h3>{char.name}</h3>
+      <p style={{ textAlign: "center" }}>{char.gender}</p>
       <div
         style={{
           display: "flex",
@@ -34,19 +39,19 @@ export const Card = () => {
       >
         <span>
           <span>Eye:</span>
-          <p>178cm</p>
+          <p>{char.eye_color}</p>
           <span>Hair:</span>
-          <p>120kg</p>
+          <p>{char.hair_color}</p>
           <span>Skin:</span>
-          <p>2000</p>
+          <p>{char.skin_color}</p>
         </span>
         <span>
           <span>Height:</span>
-          <p>178cm</p>
+          <p>{char.height}</p>
           <span>Weight:</span>
-          <p>120kg</p>
+          <p>{char.mass}</p>
           <span>Birth:</span>
-          <p>2000</p>
+          <p>{char.birth_year}</p>
         </span>
       </div>
     </DetailsContainer>
@@ -77,7 +82,8 @@ export const Card = () => {
             alignItems: "center",
           }}
         >
-          <h2>owen lars</h2>
+          <h2 style={{ textAlign: "center" }}>{char.name}</h2>
+
           <Symbol fill="#666355" className="card-symbol" />
         </m.div>
       )}
@@ -96,12 +102,6 @@ const Container = styled(m.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  h2 {
-    text-align: center;
-    font-family: "Stjldbl1";
-    letter-spacing: 1.75pt;
-    z-index: 3;
-  }
 
   svg.card-symbol {
     width: 100%;

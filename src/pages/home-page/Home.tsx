@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as StarWarsLogo } from "../../assets/images/Star_Wars_Logo.svg";
 import { Card } from "../../components/card/Card";
+import { useAppSelector } from "../../store/store";
 
 export const Home = () => {
+  const { data } = useAppSelector((state) => state.characters);
+
   return (
     <Container>
       <LogoContainer>
@@ -11,8 +14,9 @@ export const Home = () => {
         <h1>characters</h1>
       </LogoContainer>
       <CardsContainer>
-        <Card /> <Card /> <Card /> <Card /> <Card /> <Card /> <Card /> <Card />
-        <Card /> <Card /> <Card /> <Card /> <Card /> <Card /> <Card /> <Card />
+        {data?.map((item) => (
+          <Card char={item} />
+        ))}
       </CardsContainer>
     </Container>
   );

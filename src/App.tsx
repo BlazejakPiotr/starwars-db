@@ -1,9 +1,22 @@
+import { useCallback, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { Navbar } from "./components/navbar/Navbar";
 import { Favorites, Home, Search } from "./pages";
+import { getCharacters } from "./store/charactersSlice";
+import { useAppDispatch } from "./store/store";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  const initApp = useCallback(async () => {
+    await dispatch(getCharacters());
+  }, [dispatch]);
+
+  useEffect(() => {
+    initApp();
+  }, []);
+
   return (
     <BrowserRouter>
       <Navbar />
