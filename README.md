@@ -3,7 +3,6 @@
 ## **Table of contents**
 
 - Introduction
-- Preview
 - Requirement
 - Usage
 - Tools
@@ -14,24 +13,9 @@
 
 Welcome to Star Wars Database Application,
 
-Here you can find your favourite characters, planets, starships from all seven Star Wars films.
+Here you can find your favourite characters.
 
 This app was created in terms of tech task in recruitment process.
-<Br /><Br />
-
-## **Preview**
-
-Live preview:
-
-` https://`
-
-Screenshots:
-
-`https://`
-
-Video:
-
-`https://`
 <Br /><Br />
 
 ## **Requirement**
