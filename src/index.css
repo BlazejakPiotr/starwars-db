@@ -10,7 +10,9 @@
   src: local("Stjldbl1"),
     url("./assets/fonts/stjelogo/Stjldbl1.ttf") format("truetype");
 }
-
+div {
+  margin: 0;
+}
 * {
   margin: 0 auto;
   padding: 0;
@@ -18,7 +20,6 @@
 }
 
 body {
-  margin: 0;
   background-color: #000;
   background-image: url("./assets/images/5.png");
   background-size: contain;

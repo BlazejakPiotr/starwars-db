@@ -1,22 +1,40 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as StarWarsLogo } from "../../assets/images/Star_Wars_Logo.svg";
 import { Card } from "../../components/card/Card";
+import { Character } from "../../interfaces/Character";
 import { useAppSelector } from "../../store/store";
+
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 
 export const Home = () => {
   const { data } = useAppSelector((state) => state.characters);
 
   return (
     <Container>
+      <div>
+        <Link
+          to="favorites"
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          Favorites
+        </Link>
+      </div>
       <LogoContainer>
         <StarWarsLogo fill="#f0f0f0" />
-        <h1>characters</h1>
       </LogoContainer>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      ></div>
       <CardsContainer>
-        {data?.map((item) => (
-          <Card char={item} />
-        ))}
+        {data.results &&
+          data.results.map((item: Character) => (
+            <Card char={item} key={item.url} />
+          ))}
       </CardsContainer>
     </Container>
   );
@@ -30,7 +48,7 @@ const Container = styled.div`
 `;
 
 const LogoContainer = styled.div`
-  margin-bottom: 3rem;
+  margin: 3rem auto;
   flex: 1 25%;
   text-align: center;
   max-width: 500px;
@@ -43,14 +61,7 @@ const LogoContainer = styled.div`
 `;
 
 const CardsContainer = styled.div`
-  margin: 0 auto;
   display: flex;
-  justify-content: flex-start;
-  flex: 2 75%;
   flex-wrap: wrap;
-  gap: 1.5rem 1rem;
-  width: 100%;
-  > * {
-    flex-basis: 1;
-  }
+  gap: 2rem;
 `;

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Symbol } from "../../assets/images/symbol.svg";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { motion as m } from "framer-motion";
 import { Character } from "../../interfaces/Character";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { handleFavorite } from "../../store/charactersSlice";
 
 interface CardProps {
   char: Character;
@@ -11,76 +13,95 @@ interface CardProps {
 
 export const Card = ({ char }: CardProps) => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { favorite } = useAppSelector((state) => state.characters);
 
   const handleShowDetails = (prev: boolean) => setShowDetails(!prev);
 
   const CardDetailsSide = () => (
-    <DetailsContainer
-      initial={{ rotateY: -180, opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
-    >
-      <AddToFavorites>
-        <MdOutlineFavoriteBorder
-          size={32}
-          color="#f0f0f0"
-          style={{ margin: 0 }}
-        />
+    <div style={{ position: "relative", height: "100%" }}>
+      <AddToFavorites
+        initial={{ rotateY: 180, opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1, type: "tween" }}
+      >
+        {favorite.some((element) => element.url === char.url) ? (
+          <MdOutlineFavorite
+            size={32}
+            color="#ffe919"
+            onClick={() => dispatch(handleFavorite(char))}
+          />
+        ) : (
+          <MdOutlineFavoriteBorder
+            size={32}
+            color="#f0f0f0"
+            onClick={() => dispatch(handleFavorite(char))}
+          />
+        )}
       </AddToFavorites>
 
-      <h3>{char.name}</h3>
-      <p style={{ textAlign: "center" }}>{char.gender}</p>
       <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
+        style={{ width: "100%", height: "100%", margin: "2rem 0" }}
+        onClick={() => handleShowDetails(showDetails)}
       >
-        <span>
-          <span>Eye:</span>
-          <p>{char.eye_color}</p>
-          <span>Hair:</span>
-          <p>{char.hair_color}</p>
-          <span>Skin:</span>
-          <p>{char.skin_color}</p>
-        </span>
-        <span>
-          <span>Height:</span>
-          <p>{char.height}</p>
-          <span>Weight:</span>
-          <p>{char.mass}</p>
-          <span>Birth:</span>
-          <p>{char.birth_year}</p>
-        </span>
+        <DetailsContainer
+          initial={{ rotateY: -180, opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
+        >
+          <h3>{char.name}</h3>
+          <p style={{ textAlign: "center" }}>{char.gender}</p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <span>
+              <span>Eye:</span>
+              <p>{char.eye_color}</p>
+              <span>Hair:</span>
+              <p>{char.hair_color}</p>
+              <span>Skin:</span>
+              <p>{char.skin_color}</p>
+            </span>
+            <span>
+              <span>Height:</span>
+              <p>{char.height}</p>
+              <span>Weight:</span>
+              <p>{char.mass}</p>
+              <span>Birth:</span>
+              <p>{char.birth_year}</p>
+            </span>
+          </div>
+        </DetailsContainer>
       </div>
-    </DetailsContainer>
+    </div>
   );
 
   return (
     <Container
-      onClick={() => handleShowDetails(showDetails)}
       initial={{ rotateY: 0, opacity: 0 }}
       animate={{ rotateY: showDetails ? 180 : 0, opacity: 1 }}
-      exit={{ rotateY: 0, opacity: 0 }}
-      transition={{ duration: 1, type: "tween" }}
+      transition={{ duration: 0.7, type: "twin" }}
+      whileHover={{
+        scale: 1.1,
+        backgroundColor: "#3b372e",
+        transition: { duration: 0.4, type: "twin" },
+      }}
     >
       {showDetails ? (
         <CardDetailsSide />
       ) : (
         <m.div
+          onClick={() => handleShowDetails(showDetails)}
           initial={{ opacity: 0 }}
           animate={{ rotateY: showDetails ? -180 : 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5, type: "tween" }}
-          exit={{ opacity: 0 }}
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            zIndex: 0,
-            display: "flex",
-            alignItems: "center",
-          }}
+          transition={{ delay: 0.5, duration: 0.5, type: "twin" }}
         >
           <h2 style={{ textAlign: "center" }}>{char.name}</h2>
 
@@ -94,16 +115,28 @@ export const Card = ({ char }: CardProps) => {
 const Container = styled(m.div)`
   position: relative;
   padding: 0.75rem;
-  width: 230px;
-  height: 260px;
   background-color: #343636;
   border: 6px solid #dfdfdf;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 0;
+  flex: 1 1 80%;
+  height: 320px;
+  cursor: pointer;
 
+  @media (min-width: 576px) and (max-width: 768px) {
+    flex: 1 1 30%;
+  }
+  @media (min-width: 768px) and (max-width: 992px) {
+    flex: 1 1 20%;
+  }
+  @media (min-width: 992px) {
+    flex: 1 1 17%;
+  }
   svg.card-symbol {
+    padding: 0.75rem;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -115,11 +148,10 @@ const Container = styled(m.div)`
 `;
 
 const DetailsContainer = styled(m.div)`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
 
   div,
   span {
@@ -143,9 +175,8 @@ const DetailsContainer = styled(m.div)`
 `;
 
 const AddToFavorites = styled(m.div)`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
 `;

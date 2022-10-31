@@ -4,13 +4,14 @@ import styled from "styled-components";
 import { Navbar } from "./components/navbar/Navbar";
 import { Favorites, Home, Search } from "./pages";
 import { getCharacters } from "./store/charactersSlice";
-import { useAppDispatch } from "./store/store";
+import { useAppDispatch, useAppSelector } from "./store/store";
 
 function App() {
   const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.characters.data);
 
   const initApp = useCallback(async () => {
-    await dispatch(getCharacters());
+    await dispatch(getCharacters(data.next));
   }, [dispatch]);
 
   useEffect(() => {
@@ -19,7 +20,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
       <Wrapper>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,6 +34,7 @@ function App() {
 export default App;
 
 const Wrapper = styled.div`
-  padding: 1.5rem;
+  margin: 0 auto;
   max-width: 1440px;
+  padding: 1.5rem;
 `;
