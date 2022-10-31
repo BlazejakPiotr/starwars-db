@@ -124,6 +124,7 @@ const Container = styled(m.div)`
   z-index: 0;
   flex: 1 1 80%;
   height: 320px;
+  max-width: 280px;
   cursor: pointer;
 
   @media (min-width: 576px) and (max-width: 768px) {
