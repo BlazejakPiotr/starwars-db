@@ -5,8 +5,6 @@ import { Card } from "../../components/card/Card";
 import { Character } from "../../interfaces/Character";
 import { useAppSelector } from "../../store/store";
 
-import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
-
 export const Home = () => {
   const { data } = useAppSelector((state) => state.characters);
 
@@ -40,7 +38,7 @@ export const Home = () => {
   );
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -60,7 +58,7 @@ const LogoContainer = styled.div`
   }
 `;
 
-const CardsContainer = styled.div`
+export const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
