@@ -27,7 +27,7 @@ This app was created in terms of tech task in recruitment process.
 
 _Clone it_
 
-`$ git clone`
+`$ git clone git@github.com:BlazejakPiotr/starwars-db.git`
 
 _Run it_
 
